@@ -4,6 +4,7 @@
  * @returns String containing only digits.
  */
 export function onlyDigits(value: string): string {
+  if (value == null) return ''
   return value.replace(/\D/g, '')
 }
 
@@ -19,6 +20,9 @@ export function onlyDigits(value: string): string {
  * @returns partially formatted string
  */
 export function applyPattern(value: string, pattern: string): string {
+  if (value == null) return ''
+  if (pattern == null) return value
+
   let result = ''
   let digitIndex = 0
 
@@ -57,6 +61,7 @@ export function matchesPattern(value: string, regex: RegExp): boolean {
  * @returns Truncated string if longer than maxLength.
  */
 export function limitLength(value: string, maxLength?: number): string {
+  if (value == null) return ''
   if (maxLength === undefined) return value
   return value.slice(0, maxLength)
 }
@@ -73,6 +78,8 @@ export function isValidLength(
   min?: number,
   max?: number
 ): boolean {
+  if (value == null) return false
+
   if (min !== undefined && value.length < min) return false
   if (max !== undefined && value.length > max) return false
   return true
