@@ -33,10 +33,7 @@ export function applyPattern(value: string, pattern: string): string {
       }
     } else {
       // Fixed mask character
-      // Add only if there are digits filled to avoid trailing symbols
-      if (digitIndex > 0) {
-        result += char
-      }
+      result += char
     }
   }
 
