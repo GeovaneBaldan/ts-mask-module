@@ -8,6 +8,8 @@ export class CpfValidator extends BaseValidator {
   }
 
   validate(value: string): boolean {
+    if (value == null) return false
+
     return isCpfValid(value)
   }
 }
