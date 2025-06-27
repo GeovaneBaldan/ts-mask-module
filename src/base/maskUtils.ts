@@ -9,14 +9,22 @@ export function onlyDigits(value: string): string {
 }
 
 /**
- * Applies the mask progressively according to the available digits.
+ * Applies the mask progressively according to the available characters.
  *
- * Example:
+ * Alphanumeric characters (letters and digits) in the pattern will be replaced
+ * by characters from the input `value`, in order. Non-alphanumeric characters
+ * (e.g. `.`, `-`, `/`) are treated as static parts of the mask.
+ *
+ * Examples:
+ *
  * applyPattern('12345', 'XXX.XXX.XXX-XX') -> '123.45'
+ *
+ * applyPattern('AB1234', 'AA-NN.NN')      -> 'AB-12.34'
+ *
  * applyPattern('12345678901', 'XXX.XXX.XXX-XX') -> '123.456.789-01'
  *
- * @param value - string with digits only (partial or complete)
- * @param pattern - mask with 'X' representing digits
+ * @param value - raw input string (partial or complete)
+ * @param pattern - mask pattern where alphanumeric characters are placeholders
  * @returns partially formatted string
  */
 export function applyPattern(value: string, pattern: string): string {
@@ -29,7 +37,7 @@ export function applyPattern(value: string, pattern: string): string {
   for (let i = 0; i < pattern.length; i++) {
     const char = pattern[i]
 
-    if (char === 'X') {
+    if (/[a-zA-Z0-9]/.test(char)) {
       if (digitIndex < value.length) {
         result += value[digitIndex++]
       } else {
