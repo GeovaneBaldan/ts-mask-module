@@ -32,6 +32,8 @@ export abstract class BaseValidator implements Validator {
    * @returns true if valid, false otherwise
    */
   validate(value: string): boolean {
+    if (value == null) return false
+
     const length = value.length
 
     if (this.minLength !== undefined && length < this.minLength) {

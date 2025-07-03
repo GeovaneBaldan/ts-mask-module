@@ -1,1 +1,10 @@
 node_modules
+
+# Coverage
+coverage
+
+.DS_Store
+
+# Logs
+logs
+*.log

@@ -17,7 +17,7 @@ export abstract class BaseMask implements Mask {
    */
   minLength?: number
 
-  constructor(maxLength?: number, minLength?: number) {
+  constructor(minLength?: number, maxLength?: number) {
     this.maxLength = maxLength
     this.minLength = minLength
   }

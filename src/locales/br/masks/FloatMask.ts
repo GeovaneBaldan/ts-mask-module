@@ -1,5 +1,5 @@
 import { BaseMask } from '../../../base/BaseMask'
-import { limitLength, onlyDigits } from '../../../base/maskUtils'
+import { onlyDigits, limitLength } from '../../../base/maskUtils'
 
 /**
  * Automatically formats a numeric input as a float using comma as decimal separator.
@@ -9,13 +9,14 @@ import { limitLength, onlyDigits } from '../../../base/maskUtils'
 export class FloatMask extends BaseMask {
   private maxDecimalPlaces: number
 
-  constructor(decimalDigits = 3, maxLength = 20) {
+  constructor(decimalDigits = 2, maxLength = 20) {
     super(1, maxLength)
     this.maxDecimalPlaces = decimalDigits
   }
 
   format(value: string): string {
-    const digits = limitLength(onlyDigits(value), this.maxLength)
+    const rawDigits = onlyDigits(value)
+    const digits = limitLength(rawDigits, this.maxLength)
 
     if (!digits) return ''
 
