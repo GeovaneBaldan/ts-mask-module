@@ -1,119 +1,37 @@
 # Mask Module
 
-This module provides a scalable and extensible structure for formatting, unformatting (unmasking), validating, and registering data masks (like CPF, phone numbers, dates, etc), with multi-country (`locale`) support.
+This module provides a scalable and extensible structure for formatting, unformatting (unmasking), validating, and registering data masks such as CPF, phone numbers, dates, and more — with multi-country (locale) support.
 
----
+## ✨ Features
 
-## 📦 Folder Structure
-
-```
-/services/masks
-│
-├── /masks          # Mask implementations by country
-│   ├── /br
-│   └── /us
-│
-├── /validators     # Validators by country
-│   ├── /br
-│   └── /us
-│
-├── /register       # Registration functions per country
-│   ├── registerBR.ts
-│   └── registerUS.ts
-│
-├── types.ts        # Interfaces and types (Mask, Validator, Locale, MaskType)
-├── maskManager.ts  # Singleton manager for all mask logic
-├── init.ts         # Central initialization/registration
-└── README.md       # This file
-```
-
----
-
-## ✅ Registering Masks
-
-Each country has its own registration file, e.g.:
-
-```ts
-// registerBR.ts
-import { MaskManager } from "../maskManager";
-import { CPFMask } from "../masks/br/cpfMask";
-import { BRPhoneMask } from "../masks/br/phoneMask";
-import { DateMask } from "../masks/br/dateMask";
-
-import { CPFValidator } from "../validators/br/cpfValidator";
-import { BRPhoneValidator } from "../validators/br/phoneValidator";
-import { DateValidator } from "../validators/br/dateValidator";
-
-export function registerBRMasks() {
-  MaskManager.register("pt-BR", "cpf", new CPFMask(), new CPFValidator());
-  MaskManager.register(
-    "pt-BR",
-    "phone",
-    new BRPhoneMask(),
-    new BRPhoneValidator()
-  );
-  MaskManager.register("pt-BR", "date", new DateMask(), new DateValidator());
-}
-```
-
-In `init.ts`, import and call these registration functions:
-
-```ts
-// init.ts
-import { registerBRMasks } from "./register/registerBR";
-import { registerUSMasks } from "./register/registerUS";
-
-export function initializeMasks() {
-  registerBRMasks();
-  registerUSMasks();
-}
-```
-
----
-
-## 🧠 Using the `MaskManager`
-
-```ts
-import { MaskManager } from "./maskManager";
-import { MaskType } from "./types";
-
-// Formatting
-MaskManager.format("pt-BR", MaskType.CPF, "12345678901"); // '123.456.789-01'
-
-// Unmasking
-MaskManager.unmask("pt-BR", MaskType.CPF, "123.456.789-01"); // '12345678901'
-
-// Validating
-MaskManager.validate("pt-BR", MaskType.CPF, "123.456.789-01"); // true
-```
-
----
+- 📦 Modular design for registering new mask types
+- 🌍 Locale-aware formatting and validation
+- 🧹 Format and unformat (mask/unmask) functionality
+- ✅ Built-in validators for common data types (e.g. CPF, CNPJ, phone)
+- 🔧 Easily extensible for custom formats and rules
+- 💯 Written in TypeScript with full type safety
 
 ## 🧪 Running Tests
+This project uses unit tests written in TypeScript. Test files are located in:
 
-Unit tests live under `tests/masks/` and `tests/validators/`, separated by type and locale.
+`__tests__/` – General utility tests (e.g., maskUtils.test.ts)
 
-Run with:
+`src/locales/<locale>/__tests__/` – Locale-specific tests for masks and validators (e.g., Brazilian masks)
+
+To run the tests, use [pnpm](https://pnpm.io):
 
 ```bash
-npm test
-# or
-yarn test
+pnpm run test
 ```
 
-Example structure:
+Other test-related scripts:
+```bash
+pnpm run test:watch     # Run tests in watch mode
 
-```
-/tests
-├── /masks
-│   └── cpfMask.test.ts
-├── /validators
-│   └── cpfValidator.test.ts
+pnpm run test:coverage  # Generate test coverage report
 ```
 
----
-
-## 🌍 Locale Support
+## 🌐 Locale Support
 
 Current supported locales:
 
@@ -122,27 +40,12 @@ Current supported locales:
 | Brazil    | pt-BR  |
 | USA       | en-US  |
 | Argentina | es-AR  |
-| Ecuador   | es-EC  |
-| Mexico    | es-MX  |
 
 To add a new country:
 
 1. Create the mask and validator in `/masks/<locale>/` and `/validators/<locale>/`
-2. Create `register<XX>.ts` in `/register`
-3. Import and call it in `init.ts`
 
----
+## 🤝 Contributing
 
-## 💡 Tip
-
-You can auto-initialize masks in dev/test environments like this:
-
-```ts
-if (process.env.NODE_ENV !== "production") {
-  initializeMasks();
-}
-```
-
----
-
-Ready to grow with your project.
+Suggestions, bug reports, and implementation ideas are welcome!
+Feel free to open an issue or start a discussion via the [GitHub Issues](https://github.com/GeovaneBaldan/ts-mask-module/issues) tab.
