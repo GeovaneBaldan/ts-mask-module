@@ -11,6 +11,42 @@ This module provides a scalable and extensible structure for formatting, unforma
 - 🔧 Easily extensible for custom formats and rules
 - 💯 Written in TypeScript with full type safety
 
+## 📁 Project Structure
+The codebase follows a modular architecture organized by locale and responsibility, making it easy to add or modify masks and validators independently.
+
+```
+src/
+├── base/                     # Base classes and utilities
+│   ├── BaseMask.ts
+│   ├── BaseValidator.ts
+│   └── maskUtils.ts
+├── data/                     # Raw patterns, maps and constants
+│   ├── iePatterns.ts
+│   └── ieRegex.ts
+├── locales/                  # All locale-specific implementations
+│   └── br/                   # Example: Brazil
+│       ├── masks/            # Masks for CPF, CNPJ, dates, etc.
+│       ├── validators/       # Validators for Brazilian data
+│       └── registerMasks.ts  # Central registration per locale
+├── enums.ts                  # Global enums (MaskType, Locale, etc.)
+├── types.ts                  # Shared types
+├── MaskModule.ts             # Central mask registry and loader
+└── index.ts                  # Entry point
+```
+
+### ⚠️ Special Case: StateRegistrationMask
+The State Registration (Inscrição Estadual) mask and validator require an additional UF (state code) to function correctly.
+Because of this, they are not registered in the centralized `MaskModule`, as the registry assumes masks are locale + type only.
+
+To use them, instantiate them directly:
+
+```ts
+import { StateRegistrationMask } from 'MaskModule/locales/br/masks/StateRegistrationMask'
+
+const mask = new StateRegistrationMask('SP')
+mask.format('110042490114')
+```
+
 ## 🧪 Running Tests
 This project uses unit tests written in TypeScript. Test files are located in:
 
