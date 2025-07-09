@@ -110,9 +110,9 @@ MaskModule.zip
 
 ### 💡 Usage
 ```bash
-pnpm run export // Export to the current directory
+pnpm run export                    # Export to the current directory
 
-pnpm run export -- ../shared-libs // Export to a specific destination
+pnpm run export -- ../shared-libs  # Export to a specific destination
 ```
 
 ## 🤝 Contributing
