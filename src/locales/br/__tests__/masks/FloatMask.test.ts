@@ -36,4 +36,8 @@ describe('FloatMask', () => {
   it('ignores undefined input', () => {
     expect(mask.format(undefined as never)).toBe('')
   })
+
+  it('remove mask when unmask is called', () => {
+    expect(mask.unmask('123,456')).toBe('123456')
+  })
 })
