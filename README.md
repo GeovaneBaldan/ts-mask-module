@@ -47,6 +47,20 @@ const mask = new StateRegistrationMask('SP')
 mask.format('110042490114')
 ```
 
+## 🌐 Locale Support
+
+Current supported locales:
+
+| Country   | Locale |
+| --------- | ------ |
+| Brazil    | pt-BR  |
+| USA       | en-US  |
+| Argentina | es-AR  |
+
+To add a new country:
+
+1. Create the mask and validator in `/masks/<locale>/` and `/validators/<locale>/`
+
 ## 🧪 Running Tests
 This project uses unit tests written in TypeScript. Test files are located in:
 
@@ -67,19 +81,39 @@ pnpm run test:watch     # Run tests in watch mode
 pnpm run test:coverage  # Generate test coverage report
 ```
 
-## 🌐 Locale Support
+## 📦 Exporting the Mask Module
+This project includes a utility script to export the entire mask system as a standalone zip archive, making it easy to reuse in other projects without publishing it as an external package.
 
-Current supported locales:
+### 🔧 Script
+```bash
+./scripts/export-mask-module.sh
+```
 
-| Country   | Locale |
-| --------- | ------ |
-| Brazil    | pt-BR  |
-| USA       | en-US  |
-| Argentina | es-AR  |
+### 📥 What it does
+- Copies the current src/ folder into a temporary structure named `MaskModule/`
+- Removes all `__tests__` folders
+- Packages everything into a `MaskModule.zip` archive
+- Optionally moves the archive to a destination path
 
-To add a new country:
+### 📂 Example Result
+```bash
+MaskModule.zip
+└── MaskModule/
+    ├── base/
+    ├── data/
+    ├── locales/
+    ├── enums.ts
+    ├── types.ts
+    ├── MaskModule.ts
+    └── index.ts
+```
 
-1. Create the mask and validator in `/masks/<locale>/` and `/validators/<locale>/`
+### 💡 Usage
+```bash
+pnpm run export // Export to the current directory
+
+pnpm run export -- ../shared-libs // Export to a specific destination
+```
 
 ## 🤝 Contributing
 
