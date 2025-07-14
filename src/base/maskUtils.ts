@@ -45,7 +45,8 @@ export function applyPattern(value: string, pattern: string): string {
       }
     } else {
       // Fixed mask character
-      result += char
+      if (digitIndex < value.length) result += char
+      else break // No more digits available, stop applying more mask
     }
   }
 
